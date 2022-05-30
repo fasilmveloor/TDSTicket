@@ -40,7 +40,7 @@ class TouristUserSerializer(serializers.ModelSerializer):
     vaccination_certificate = serializers.FileField(write_only=True)
 
     def save(self, **kwargs):
-        user = User.objects.get(username='fasilveloor')#self.validated_data['username'])
+        user = User.objects.get(username='admin1234')#self.validated_data['username'])
         first_name=self.validated_data['first_name']
         last_name=self.validated_data['last_name']
         date_of_birth=self.validated_data['date_of_birth']
