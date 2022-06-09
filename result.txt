@@ -70,3 +70,14 @@ POST http://localhost:8000/tdsapi/announcements/ - create announcement - token
 GET http://localhost:8000/tdsapi/announcements/ - get announcements based on the requested user - token
 GET http://localhost:8000/tdsapi/announcements/1 - to get individual - token
 PUT http://localhost:8000/tdsapi/tds/update - to update profile - token
+
+POST http://localhost:8000/touristapi/profile/ - to set tourist profile
+{
+    "first_name": "",
+    "last_name": "",
+    "date_of_birth": null,
+    "profile_image": null,
+    "vaccination_certificate": null,
+    "phone_number": "",
+    "address": ""
+}
