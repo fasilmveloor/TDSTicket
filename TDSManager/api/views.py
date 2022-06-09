@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import RetrieveAPIView, ListAPIView, ListCreateAPIView, RetrieveUpdateAPIView
 from TDSManager.models import TDSUser, TDType, Announcements
 from .serializers import TDSUserSerializer, TDTypeSerializer, AnnouncementsSerializer
-from users.api.permissions import IS_TDS
+from users.api.permissions import IsTDS
 class TDTypeViewset(ListAPIView):
     queryset = TDType.objects.all()
     serializer_class = TDTypeSerializer
@@ -41,5 +41,4 @@ class AnnouncementDetailView(RetrieveAPIView):
 class TDUserUpdateView(RetrieveUpdateAPIView):
     queryset = TDSUser.objects.all()
     serializer_class = TDSUserSerializer
-    permission_classes = [IsAuthenticated, IS_TDS]
-    lookup_field = 'user'
+    permission_classes = [IsAuthenticated]

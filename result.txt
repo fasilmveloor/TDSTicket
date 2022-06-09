@@ -1,0 +1,72 @@
+POST http://localhost:8000/account/signup/ -register api
+{
+    "username": "",
+    "email": "",
+    "password": "",
+    "password2": "",
+    "role": ""
+}
+
+POST http://localhost:8000/account/login/ -register api
+{
+    "username":"fasilveloor",
+    "password":"fas6119"
+}
+
+POST http://localhost:8000/account/logout/ -logout api -token
+
+POST http://localhost:8000/tdsapi/tds/ - create tds account, token needed
+{
+    "name": "",
+    "opening_time": null,
+    "closing_time": null,
+    "holydays": "",
+    "address": "",
+    "ticket_fair": null,
+    "phone_number": "",
+    "visitor_min_age": null,
+    "description": "",
+    "type": null
+}
+
+GET http://localhost:8000/tdsapi/tds/ - to fetch all tds with above fields Token required
+
+GET http://localhost:8000/tdsapi/tds/1/ - to fetch individual tds info ,1 represent primary key value 
+{
+    "tdid": 1,
+    "name": "SIVAKUMAR R",
+    "opening_time": "15:56:01",
+    "closing_time": "15:56:02",
+    "holydays": "hkjhkjhnkjhnkljh",
+    "address": "jhbkjhbnkj",
+    "ticket_fair": 100.0,
+    "phone_number": "8593984251",
+    "visitor_min_age": 10,
+    "description": "drerdredr",
+    "type": 1
+}
+
+GET http://localhost:8000/tdsapi/tdtype/ - to fetch all TDTypes - no token
+GET http://localhost:8000/tdsapi/tdtype/1/ - to fetch individual - no token
+
+[
+    {
+        "id": 1,
+        "type": "Forest",
+        "description": "fsadasd"
+    },
+    {
+        "id": 2,
+        "type": "Waterfall",
+        "description": "weqrd"
+    }
+]
+POST http://localhost:8000/tdsapi/announcements/ - create announcement - token
+{
+    "title":"fasilveloor",
+    "description":"jkhkjhjkhkjh"
+}
+
+GET http://localhost:8000/tdsapi/announcements/ - get announcements based on the requested user - token
+GET http://localhost:8000/tdsapi/announcements/1 - to get individual - token
+PUT http://localhost:8000/tdsapi/tds/update - to update profile - token

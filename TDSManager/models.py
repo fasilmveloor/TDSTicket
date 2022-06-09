@@ -27,7 +27,7 @@ class TDSUser(models.Model):
         return self.name
 
 class Announcements(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True, default=None)
     title = models.CharField(max_length=100)
     description = models.TextField()
     date = models.DateField(auto_now_add=True)

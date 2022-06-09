@@ -33,6 +33,15 @@ class TDTypeSerializer(serializers.ModelSerializer):
         fields = ('id','type','description')
 
 class AnnouncementsSerializer(serializers.ModelSerializer):
+
+    def save(self, **kwargs):
+        title=self.validated_data['title']
+        description=self.validated_data['description']
+        tds = TDSUser.objects.get(user=self.context['request'].user)
+        announcements = Announcements(title=title, description=description, tds=tds)
+        announcements.save()
+        return announcements
+
     class Meta:
         model = Announcements
-        fields = ('id','title','description','date','tds')
+        fields = ('id','title','description','date')
