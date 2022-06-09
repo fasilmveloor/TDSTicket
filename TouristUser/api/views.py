@@ -22,7 +22,7 @@ class TouristUserRegisterView(generics.GenericAPIView):
 class TicketView(generics.ListCreateAPIView):
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
-    #permission_classes = (IsAuthenticated)
+    permission_classes = (IsAuthenticated)
 
     def list(self, request, *args, **kwargs):
         tourist = TouristUser.objects.get(user = self.request.user)
