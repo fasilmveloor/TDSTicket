@@ -44,6 +44,8 @@ INSTALLED_APPS = [
 
     #Custom Apps
     'users',
+    'TDSManager',
+    'TouristUser',
 
 ]
 

@@ -5,7 +5,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from users.api.permissions import IsTDS, IsTourist
-from .serializers import UserSignupSerializer, TouristUserSerializer
+from .serializers import UserSignupSerializer
 
 class UserSignup(generics.GenericAPIView):
     serializer_class = UserSignupSerializer
@@ -36,15 +36,3 @@ class LogoutView(APIView):
     def post(self, request, *args, **kwargs):
         request.user.auth.delete()
         return Response(status=status.HTTP_200_OK)
-
-class TouristUserRegisterView(generics.GenericAPIView):
-    serializer_class = TouristUserSerializer
-    permission_classes = (IsAuthenticated, IsTourist)
-
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response({
-            "message": "Tourist profile Created successfully."
-        })

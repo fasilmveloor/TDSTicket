@@ -4,3 +4,4 @@ media/
 */__pycache__/
 */*/__pycache__/
 *.sqlite3
+*/*/*/__pychache__/
