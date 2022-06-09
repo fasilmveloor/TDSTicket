@@ -3,6 +3,7 @@ from rest_framework import serializers
 from TouristUser.models import TouristUser, Ticket, TeamMember
 from TouristUser import utilities
 from TDSManager.models import TDSUser
+from TouristUser.facemask.detect_mask_video import checkImage
 
 class TouristUserSerializer(serializers.ModelSerializer):
     vaccination_certificate = serializers.FileField(write_only=True)
@@ -32,23 +33,23 @@ class TouristUserSerializer(serializers.ModelSerializer):
         }
 
 class TeamMemberSerializer(serializers.ModelSerializer):
-    tuser = serializers.PrimaryKeyRelatedField(queryset=TouristUser.objects.all(), write_only=True)
+    #ticket = serializers.PrimaryKeyRelatedField(queryset=Ticket.objects.all(), write_only=True)
 
     def save(self, **kwargs):
         name=self.validated_data['name']
         dob=self.validated_data['dob']
         vaccination_status=self.validated_data['vaccination_status']
-        tuser = TouristUser.objects.get(user = self.validated_data['request'].user)
         vaccination_certificate = self.validated_data['vaccination_certificate']
-        teamMember = TeamMember(name=name, dob=dob, vaccination_status=vaccination_status, tuser=tuser, vaccination_certificate=vaccination_certificate)
+        teamMember = TeamMember(name=name, dob=dob, vaccination_status=vaccination_status, vaccination_certificate=vaccination_certificate)
         teamMember.save()
         return teamMember
 
     class Meta:
         model = TeamMember
-        fields = ('id', 'name', 'dob', 'vaccination_status', 'tuser', 'vaccination_certificate')
+        fields = ('id', 'name', 'dob', 'vaccination_status', 'vaccination_certificate')
 
 class TicketSerializer(serializers.ModelSerializer):
+    team_members = TeamMemberSerializer(many=True)
 
     def save(self, **kwargs):
         tourist = TouristUser.objects.get(user = self.validated_data['request'].user)
@@ -57,13 +58,22 @@ class TicketSerializer(serializers.ModelSerializer):
         no_of_adults = self.validated_data['no_of_adults']
         no_of_children = self.validated_data['no_of_children']
         total_price = tds.price * no_of_Tickets 
-        booking_date = self.validated_data['booking_date']
+        visiting_date = self.validated_data['visiting_date']
         group_image = self.validated_data['group_image']
-        ticket = Ticket(tourist=tourist, tds=tds, no_of_Tickets=no_of_Tickets, no_of_adults=no_of_adults, no_of_children=no_of_children, total_price=total_price, booking_date=booking_date, group_image=group_image)
+        exp = checkImage(group_image)
+        if exp:
+            raise serializers.ValidationError(exp)
+        team_members = self.validated_data['team_members']
+        teamMember = TeamMemberSerializer(data=team_members, many=True)
+        teamMember.is_valid()
+        teamMember.save()
+        ticket = Ticket(tourist=tourist, tds=tds, no_of_Tickets=no_of_Tickets, no_of_adults=no_of_adults, no_of_children=no_of_children, total_price=total_price, visiting_date=visiting_date, group_image=group_image, team_members=teamMember.data)
         ticket.save()
         return ticket
 
+        
+
     class Meta:
         model = Ticket
-        fields = ('tourist', 'tds', 'no_of_Tickets', 'no_of_adults', 'no_of_children', 'booking_date', 'group_image')
+        fields = "__all__"
     

@@ -9,13 +9,13 @@ class TouristUserAdmin(admin.ModelAdmin):
         model = TouristUser
 
 class TicketAdmin(admin.ModelAdmin):
-    list_display = ('ticketid', 'tourist', 'tds', 'no_of_Tickets', 'no_of_adults', 'no_of_children', 'total_price', 'booked_date', 'booking_date')
+    list_display = ('ticketid', 'tourist', 'tds', 'no_of_Tickets', 'no_of_adults', 'no_of_children', 'total_price', 'booked_date', 'visiting_date')
 
     class Meta:
         model = Ticket
 
 class TeamMemberAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'dob', 'vaccination_status', 'tuser')
+    list_display = ('id', 'name', 'dob', 'vaccination_status')
 
     class Meta:
         model = TeamMember

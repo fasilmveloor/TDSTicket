@@ -14,7 +14,15 @@ class TouristUser(models.Model):
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name
+class TeamMember(models.Model):
+    id = models.AutoField(primary_key=True, default=None, auto_created=True)
+    name = models.CharField(max_length=100)
+    dob = models.DateField(blank=True, null=True)
+    vaccination_status = models.CharField(max_length=100, blank=True, null=True)
+    vaccination_certificate = models.FileField(upload_to='vaccination/', blank=True, null=True, default='images/default.jpg')
 
+    def __str__(self):
+        return self.name
 
 class Ticket(models.Model):
     ticketid = models.AutoField(primary_key=True, default=None, auto_created=True)
@@ -25,20 +33,11 @@ class Ticket(models.Model):
     no_of_children = models.IntegerField(default=0)
     total_price = models.FloatField(default=0.0)
     booked_date = models.DateField(auto_now_add=True)
-    #The date which the team like to visit
-    booking_date = models.DateField(auto_now_add=False)
+    visiting_date = models.DateField(auto_now_add=False)
     group_image = models.ImageField(upload_to='groupimg/', blank=True, null=True, default='images/default.jpg')
+    team_members = models.ManyToManyField(TeamMember, related_name='team_members', blank=True)
 
-class TeamMember(models.Model):
-    id = models.AutoField(primary_key=True, default=None, auto_created=True)
-    name = models.CharField(max_length=100)
-    dob = models.DateField(blank=True, null=True)
-    vaccination_status = models.CharField(max_length=100, blank=True, null=True)
-    vaccination_certificate = models.FileField(upload_to='vaccination/', blank=True, null=True, default='images/default.jpg')
-    tuser = models.ForeignKey(TouristUser, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.name
     
 
     

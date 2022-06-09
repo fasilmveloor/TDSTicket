@@ -81,3 +81,36 @@ POST http://localhost:8000/touristapi/profile/ - to set tourist profile
     "phone_number": "",
     "address": ""
 }
+
+POST http://localhost:8000/touristapi/ticket/ to create ticket - token
+{
+        "ticketid": 1,
+        "team_members": [
+            {
+                "id": 1,
+                "name": "uyiuhiujh",
+                "dob": "2022-06-09",
+                "vaccination_status": "hvjhgjh",
+                "vaccination_certificate": "http://localhost:8000/media/images/default.jpg"
+            },
+            {
+                "id": 2,
+                "name": "dfgdf",
+                "dob": "2022-06-09",
+                "vaccination_status": "kjlhkjl",
+                "vaccination_certificate": "http://localhost:8000/media/images/default.jpg"
+            }
+        ],
+        "no_of_Tickets": 1,
+        "no_of_adults": 1,
+        "no_of_children": 0,
+        "total_price": 100.0,
+        "booked_date": "2022-06-09",
+        "visiting_date": "2022-06-09",
+        "group_image": "http://localhost:8000/media/images/default.jpg",
+        "tourist": 4,
+        "tds": 2
+    }
+
+GET http://localhost:8000/touristapi/ticket/ - to fetch ticket booking for a particular tds token
+GET http://localhost:8000/touristapi/team-members/1/ - to fetch team members of a particluar ticket 1 stands for ticket id
