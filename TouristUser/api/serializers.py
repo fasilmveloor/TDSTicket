@@ -60,9 +60,9 @@ class TicketSerializer(serializers.ModelSerializer):
         total_price = tds.price * no_of_Tickets 
         visiting_date = self.validated_data['visiting_date']
         group_image = self.validated_data['group_image']
-        exp = checkImage(group_image)
-        if exp:
-            raise serializers.ValidationError(exp)
+        message = checkImage(group_image)
+        if message != "All faces are masked" :
+            raise serializers.ValidationError(message)
         team_members = self.validated_data['team_members']
         teamMember = TeamMemberSerializer(data=team_members, many=True)
         teamMember.is_valid()
