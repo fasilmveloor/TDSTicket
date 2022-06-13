@@ -42,3 +42,17 @@ class TDUserUpdateView(RetrieveUpdateAPIView):
     queryset = TDSUser.objects.all()
     serializer_class = TDSUserSerializer
     permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        tds = TDSUser.objects.get(user = self.request.user)
+        serializer = self.get_serializer(tds)
+        return response.Response(serializer.data)
+
+    def put(self, request, *args, **kwargs):
+        tds = TDSUser.objects.get(user = self.request.user)
+        serializer = self.get_serializer(tds, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return response.Response({
+            "message": "profile updated successfully."
+        })

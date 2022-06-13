@@ -65,3 +65,22 @@ class TeamMemberViewset(generics.ListCreateAPIView):
             "message": "Team member added successfully.",
             "team_member": serializer.data['id']
         })
+
+class TouristProfileView(generics.RetrieveUpdateAPIView):
+    queryset = TouristUser.objects.all()
+    serializer_class = TouristUserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        tourist = TouristUser.objects.get(user = self.request.user)
+        serializer = self.get_serializer(tourist)
+        return Response(serializer.data)
+
+    def put(self, request, *args, **kwargs):
+        tourist = TouristUser.objects.get(user = self.request.user)
+        serializer = self.get_serializer(tourist, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({
+            "message": "Tourist profile updated successfully."
+        })
