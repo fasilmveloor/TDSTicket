@@ -86,20 +86,7 @@ POST http://localhost:8000/touristapi/ticket/ to create ticket - token
 {
         "ticketid": 1,
         "team_members": [
-            {
-                "id": 1,
-                "name": "uyiuhiujh",
-                "dob": "2022-06-09",
-                "vaccination_status": "hvjhgjh",
-                "vaccination_certificate": "http://localhost:8000/media/images/default.jpg"
-            },
-            {
-                "id": 2,
-                "name": "dfgdf",
-                "dob": "2022-06-09",
-                "vaccination_status": "kjlhkjl",
-                "vaccination_certificate": "http://localhost:8000/media/images/default.jpg"
-            }
+            1,2,3
         ],
         "no_of_Tickets": 1,
         "no_of_adults": 1,
@@ -114,3 +101,17 @@ POST http://localhost:8000/touristapi/ticket/ to create ticket - token
 
 GET http://localhost:8000/touristapi/ticket/ - to fetch ticket booking for a particular tds token
 GET http://localhost:8000/touristapi/team-members/1/ - to fetch team members of a particluar ticket 1 stands for ticket id
+
+POST http://localhost:8000/touristapi/team-member/ - to add a single team member
+input : {
+    "name": "",
+    "dob": null,
+    "vaccination_status": "",
+    "vaccination_certificate": null
+}
+
+response:
+{
+    "message": "Team member added successfully.",
+    "team_member": 5
+}

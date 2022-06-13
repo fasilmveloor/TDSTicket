@@ -77,3 +77,32 @@ class TicketSerializer(serializers.ModelSerializer):
         model = Ticket
         fields = "__all__"
     
+class TicketCreateSerializer(serializers.ModelSerializer):
+    
+
+    def save(self, **kwargs):
+        tourist = TouristUser.objects.get(user = self.validated_data['request'].user)
+        tds = TDSUser.objects.get(pk = self.validated_data['tds'])
+        no_of_Tickets = self.validated_data['no_of_Tickets']
+        no_of_adults = self.validated_data['no_of_adults']
+        no_of_children = self.validated_data['no_of_children']
+        total_price = tds.price * no_of_Tickets 
+        visiting_date = self.validated_data['visiting_date']
+        group_image = self.validated_data['group_image']
+        message = checkImage(group_image)
+        if message != "All faces are masked" :
+            raise serializers.ValidationError(message)
+        team_members = self.validated_data['team_members']
+        print(type(team_members))
+        print(team_members)
+        
+        ticket = Ticket(tourist=tourist, tds=tds, no_of_Tickets=no_of_Tickets, no_of_adults=no_of_adults, no_of_children=no_of_children, total_price=total_price, visiting_date=visiting_date, group_image=group_image, team_members=team_members)
+        ticket.save()
+        return ticket
+
+        
+
+    class Meta:
+        model = Ticket
+        fields = "__all__"
+    
